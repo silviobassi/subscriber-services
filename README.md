@@ -29,6 +29,7 @@ Bem-vindo ao **Subscriber Services**! Este sistema é desenvolvido em Go e tem c
 ## Execução da Aplicação
 
 1. Para iniciar o serviço, execute:
+
    ```sh
    make start
    ```
