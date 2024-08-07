@@ -30,10 +30,6 @@ Bem-vindo ao **Subscriber Services**! Este sistema é desenvolvido em Go e tem c
 
 1. Para iniciar o serviço, execute:
    ```sh
-   go run main.go
-   ```
-ou
-   ```
    make start
    ```
 ![GitHub](https://img.shields.io/badge/GitHub-E7SubscriberServices-blue?logo=github)
