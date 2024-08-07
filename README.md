@@ -4,11 +4,11 @@
 
 Bem-vindo ao **Subscriber Services**! Este sistema é desenvolvido em Go e tem como objetivo gerenciar assinantes de forma eficiente. Utiliza Redis para armazenamento de sessões e goroutines para envio de emails e gerenciamento de assinaturas, garantindo alta performance.
 
-### Pré-requisitos
+## Pré-requisitos
 
 ✅ Go 1.22 ou superior
 
-### Instalação
+## Instalação
 
 1. Clone o repositório:
     ```sh
@@ -28,12 +28,13 @@ Bem-vindo ao **Subscriber Services**! Este sistema é desenvolvido em Go e tem c
 
 ## Execução da Aplicação
 
-Para iniciar o serviço, execute:
-```sh
-go run main.go
-```
+1. Para iniciar o serviço, execute:
+   ```sh
+   go run main.go
+   ```
 ou
-```
-make start
-```
-
+   ```
+   make start
+   ```
+![GitHub](https://img.shields.io/badge/GitHub-E7SubscriberServices-blue?logo=github)
+![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange)
