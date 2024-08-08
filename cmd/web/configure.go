@@ -13,6 +13,7 @@ type Config struct {
 	DB       *sql.DB
 	InfoLog  *log.Logger
 	ErrorLog *log.Logger
-	Wait   *sync.WaitGroup
-	Models entity.Models
+	Wait     *sync.WaitGroup
+	Models   entity.Models
+	Mailer   Mail
 }
