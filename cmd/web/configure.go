@@ -4,13 +4,15 @@ import (
 	"database/sql"
 	"github.com/alexedwards/scs/v2"
 	"log"
+	"subscriber-services/entity"
 	"sync"
 )
 
 type Config struct {
-	Session *scs.SessionManager
-	DB *sql.DB
-	InfoLog *log.Logger
+	Session  *scs.SessionManager
+	DB       *sql.DB
+	InfoLog  *log.Logger
 	ErrorLog *log.Logger
-	Wait *sync.WaitGroup
+	Wait   *sync.WaitGroup
+	Models entity.Models
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/gob"
 	"fmt"
 	"github.com/alexedwards/scs/redisstore"
 	"github.com/alexedwards/scs/v2"
@@ -9,7 +10,10 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"subscriber-services/entity"
 	"sync"
+	"syscall"
 	"time"
 
 	_ "github.com/jackc/pgconn"
@@ -42,9 +46,13 @@ func main() {
 		Wait:     &wg,
 		InfoLog:  infoLog,
 		ErrorLog: errorLog,
+		Models:   entity.New(db),
 	}
 
 	// set up mail
+
+	// lister for signals
+	go app.listenForShutdown()
 
 	// listen for web connections
 	app.serve()
@@ -111,6 +119,8 @@ func openDB(dsn string) (*sql.DB, error) {
 }
 
 func initSession() *scs.SessionManager {
+	gob.Register(entity.User{})
+
 	session := scs.New()
 	session.Store = redisstore.New(initRedis())
 	session.Lifetime = 24 * time.Hour
@@ -133,4 +143,27 @@ func initRedis() *redis.Pool {
 	}
 
 	return redisPool
+}
+
+func (app *Config) listenForShutdown() {
+	// create a channel to listen for an interrupt or terminate signal from the OS
+	shutdown := make(chan os.Signal, 1)
+	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
+
+	// block until we receive the signal
+	<-shutdown
+	app.shutdown()
+
+	app.InfoLog.Println("Shutting down")
+	os.Exit(0)
+}
+
+func (app *Config) shutdown() {
+	// perform any cleanup tasks
+	app.InfoLog.Println("Performing cleanup tasks...")
+
+	// block until wait group is empty
+	app.Wait.Wait()
+
+	app.InfoLog.Println("closing channels and shutting down application...")
 }
